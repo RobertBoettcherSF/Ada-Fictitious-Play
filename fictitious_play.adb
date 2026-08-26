@@ -85,8 +85,11 @@ package body Fictitious_Play is
       Is_P1   : Boolean;
       Lambda  : Float
    ) return Action_Index is
+      First_Bound : constant Action_Index := (if Is_P1 then Payoffs'First(1) else Payoffs'First(2));
+      Last_Bound  : constant Action_Index := (if Is_P1 then Payoffs'Last(1) else Payoffs'Last(2));
+      
       type Float_Array is array (Action_Index range <>) of Float;
-      Exp_Payoffs : Float_Array(if Is_P1 then Payoffs'Range(1) else Payoffs'Range(2)) := (others => 0.0);
+      Exp_Payoffs : Float_Array (First_Bound .. Last_Bound) := (others => 0.0);
       Max_Exp     : Float := -1.0e10;
       Sum_Weights : Float := 0.0;
       Rand_Val    : Float;
